@@ -61,7 +61,122 @@ const loginUser = async (req, res) => {
     }
 }
 
+const logoutUser = async (req, res) => {
+    try {
+        res.clearCookie("refresh_token");
+        return res.status(200).json({
+            status: "200",
+            message: "Logout successfully"
+        })
+    } catch (e) {
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const data = req.body;
+
+        if (!userId) {
+            res.status(200).json({
+                status: "ERR",
+                message: "The userId is required"
+            })
+        }
+
+        const response = await UserService.updateUser(userId, data);
+
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(404).json({
+            err: error.message
+        })
+    }
+}
+
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        if (!userId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The userId is required'
+            })
+        }
+
+        const response = await UserService.deleteUser(userId);
+        return res.status(200).json(response);
+
+    } catch (e) {
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+}
+
+const getAllUser = async (req, res) => {
+    try {
+        const response = await UserService.getAllUser();
+        return res.status(200).json(response);
+
+    } catch (e) {
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+}
+
+const getDetailUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        if (!userId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The userId is required'
+            })
+        }
+        const response = await UserService.getDetailUser(userId);
+        return res.status(200).json(response);
+
+    } catch (e) {
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+}
+
+const refreshToken = async (req, res) => {
+    try {
+        const token = req.headers?.token.split(" ")[1];
+
+        if (!token) {
+            return res.status(400).json({
+                status: "ERR",
+                message: "The refresh token is required"
+            })
+        }
+
+        const response = await UserService.refreshToken(token);
+
+        return res.status(200).json(response)
+    } catch (error) {
+        return res.status(200).json({
+            err: error.message
+        })
+    }
+}
+
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    logoutUser,
+    updateUser,
+    deleteUser,
+    getAllUser,
+    getDetailUser,
+    refreshToken,
 }
