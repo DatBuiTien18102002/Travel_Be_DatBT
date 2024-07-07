@@ -35,6 +35,33 @@ const createUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const reg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        const isCheckEmail = reg.test(email);
+
+        if (!email || !password) {
+            return res.status(400).json({
+                status: "ERR",
+                message: "The input isRequired"
+            })
+        } else if (!isCheckEmail) {
+            return res.status(400).json({
+                status: "ERR",
+                message: "The email is invalid"
+            })
+        }
+
+        const response = await UserService.loginUser(req.body);
+
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(409).json({ err: error.message })
+    }
+}
+
 module.exports = {
     createUser,
+    loginUser
 }
