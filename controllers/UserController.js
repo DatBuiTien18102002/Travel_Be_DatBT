@@ -4,6 +4,7 @@ const User = require("../models/UserModel");
 
 const createUser = async (req, res) => {
     try {
+        console.log(req.body);
         const { email, password, confirmPassword } = req.body;
         const reg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
         const isCheckEmail = reg.test(email);
@@ -79,11 +80,19 @@ const updateUser = async (req, res) => {
     try {
         const userId = req.params.id;
         const data = req.body;
+        const { newPassword, confirmNewPassword } = data;
 
         if (!userId) {
-            res.status(200).json({
+            return res.status(200).json({
                 status: "ERR",
                 message: "The userId is required"
+            })
+        }
+
+        if (newPassword && newPassword !== confirmNewPassword) {
+            return res.status(200).json({
+                status: "ERR",
+                message: "The new password must equal confirm new password"
             })
         }
 

@@ -13,6 +13,7 @@ const createUser = (newUser) => {
             const checkUser = await User.findOne({
                 email: email
             })
+            console.log("checkUser", checkUser);
             if (checkUser) {
                 resolve({
                     status: '400',
@@ -33,6 +34,7 @@ const createUser = (newUser) => {
                 })
             }
         } catch (e) {
+            console.log("error", e);
             reject(e)
         }
     })
@@ -76,8 +78,10 @@ const loginUser = (user) => {
             resolve({
                 status: '200',
                 message: 'Login Success',
-                access_token,
-                refresh_token
+                data: {
+                    access_token,
+                    refresh_token
+                }
             })
         } catch (error) {
             reject(error)
@@ -97,6 +101,24 @@ const updateUser = (id, data) => {
                     status: "404",
                     message: "The email is incorrect"
                 })
+            }
+
+            if (data.newPassword) {
+                const comparePassword = bcrypt.compareSync(data.oldPassword, checkedUser.password);
+                if (comparePassword) {
+                    const hash = bcrypt.hashSync(data?.newPassword, 10);
+                    await User.findByIdAndUpdate(id, { password: hash }, { new: true });
+
+                    resolve({
+                        status: "200",
+                        message: "Update password success",
+                    })
+                } else {
+                    resolve({
+                        status: "404",
+                        message: "The old password is incorrect"
+                    })
+                }
             }
 
             const updateUser = await User.findByIdAndUpdate(id, data, { new: true });
@@ -158,7 +180,6 @@ const getDetailUser = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             const detailUser = await User.findOne({ _id: id })
-
             resolve({
                 status: '200',
                 message: 'Get detail user success',
@@ -190,9 +211,11 @@ const refreshToken = (token) => {
             }
 
             resolve({
-                status: "200",
-                message: "success",
-                newAccess_Token
+                data: {
+                    status: "200",
+                    message: "success",
+                    newAccess_Token
+                }
             })
         })
     })
