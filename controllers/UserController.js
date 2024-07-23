@@ -78,6 +78,7 @@ const logoutUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
+        console.log("Update");
         const userId = req.params.id;
         const data = req.body;
         const { newPassword, confirmNewPassword } = data;
@@ -100,6 +101,7 @@ const updateUser = async (req, res) => {
 
         return res.status(200).json(response);
     } catch (error) {
+        console.log(error.message);
         return res.status(404).json({
             err: error.message
         })

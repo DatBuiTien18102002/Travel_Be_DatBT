@@ -43,6 +43,9 @@ const tourSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
+        availableSeat: {
+            type: Number,
+        },
         reviews: [
             {
                 type: mongoose.Types.ObjectId,

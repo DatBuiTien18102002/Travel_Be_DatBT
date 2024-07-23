@@ -97,9 +97,18 @@ const updateUser = (id, data) => {
             const checkedUser = await User.findOne({ _id: id });
 
             if (!checkedUser) {
-                resolve({
+                return resolve({
                     status: "404",
-                    message: "The email is incorrect"
+                    message: "The user not found"
+                })
+            }
+
+            const checkEmail = await User.findOne({ email: data?.email })
+
+            if (checkEmail._id.toString() !== id) {
+                return resolve({
+                    status: "404",
+                    message: "The email is already exist"
                 })
             }
 

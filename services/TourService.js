@@ -1,7 +1,4 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const { generalAccessToken, generalRefreshToken } = require("./jwtService");
 const Tour = require("../models/TourModel");
 
 dotenv.config();
