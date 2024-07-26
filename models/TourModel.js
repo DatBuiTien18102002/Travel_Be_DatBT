@@ -37,8 +37,6 @@ const tourSchema = new mongoose.Schema(
                 ]
             }
         ],
-        rating: { type: Number, default: 0 },
-        numRate: { type: Number, default: 0 },
         currentSeat: {
             type: Number,
             default: 0
@@ -49,7 +47,7 @@ const tourSchema = new mongoose.Schema(
         reviews: [
             {
                 type: mongoose.Types.ObjectId,
-                ref: "ReviewModel",
+                ref: "Review",
             },
         ],
 

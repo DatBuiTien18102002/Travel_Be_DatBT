@@ -2,9 +2,16 @@ const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
     {
-        reviewId: {
+        tourId: {
             type: mongoose.Types.ObjectId,
             ref: "Tour",
+        },
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+        avatar: {
+            type: String,
         },
         username: {
             type: String,

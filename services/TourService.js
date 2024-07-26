@@ -39,7 +39,7 @@ const createTour = (newTour) => {
 const getDetailTour = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const detailTour = await Tour.findOne({ _id: id })
+            const detailTour = await Tour.findOne({ _id: id }).populate('reviews')
 
             return resolve({
                 status: '200',
@@ -71,7 +71,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
             }
 
             if (!_sort || !_order) {
-                const allTour = await Tour.find(filter).limit(limit).skip(tourSkip);
+                const allTour = await Tour.find(filter).limit(limit).skip(tourSkip).populate('reviews');
                 return resolve({
                     status: "200",
                     message: "Get all tour success",
@@ -81,7 +81,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
                     data: allTour,
                 })
             } else if (_sort || _order) {
-                const allTour = await Tour.find(filter).limit(limit).skip(tourSkip).sort({
+                const allTour = await Tour.find(filter).limit(limit).skip(tourSkip).populate('reviews').sort({
                     [_sort]: _order
                 }).collation({ locale: 'vi', strength: 2 });
                 return resolve({
