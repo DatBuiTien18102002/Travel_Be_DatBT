@@ -128,9 +128,9 @@ const deleteUser = async (req, res) => {
     }
 }
 
-const getAllUser = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
-        const response = await UserService.getAllUser();
+        const response = await UserService.getAllUsers();
         return res.status(200).json(response);
 
     } catch (e) {
@@ -187,7 +187,7 @@ module.exports = {
     logoutUser,
     updateUser,
     deleteUser,
-    getAllUser,
+    getAllUsers,
     getDetailUser,
     refreshToken,
 }

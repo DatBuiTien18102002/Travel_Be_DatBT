@@ -15,7 +15,7 @@ const createUser = (newUser) => {
             })
             console.log("checkUser", checkUser);
             if (checkUser) {
-                resolve({
+                return resolve({
                     status: '400',
                     message: 'The email is already exists'
                 });
@@ -27,7 +27,7 @@ const createUser = (newUser) => {
             })
 
             if (createUser) {
-                resolve({
+                return resolve({
                     status: '200',
                     message: 'Create account success',
                     data: createUser
@@ -50,7 +50,7 @@ const loginUser = (user) => {
             })
 
             if (!checkUser) {
-                resolve({
+                return resolve({
                     status: '404',
                     message: "The email is incorrect"
                 })
@@ -59,7 +59,7 @@ const loginUser = (user) => {
             const comparePassword = bcrypt.compareSync(password, checkUser.password);
 
             if (!comparePassword) {
-                resolve({
+                return resolve({
                     status: "404",
                     message: "The password is incorrect"
                 })
@@ -75,7 +75,7 @@ const loginUser = (user) => {
                 isAdmin: checkUser.isAdmin
             });
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Login Success',
                 data: {
@@ -118,12 +118,12 @@ const updateUser = (id, data) => {
                     const hash = bcrypt.hashSync(data?.newPassword, 10);
                     await User.findByIdAndUpdate(id, { password: hash }, { new: true });
 
-                    resolve({
+                    return resolve({
                         status: "200",
                         message: "Update password success",
                     })
                 } else {
-                    resolve({
+                    return resolve({
                         status: "404",
                         message: "The old password is incorrect"
                     })
@@ -132,7 +132,7 @@ const updateUser = (id, data) => {
 
             const updateUser = await User.findByIdAndUpdate(id, data, { new: true });
 
-            resolve({
+            return resolve({
                 status: "200",
                 message: "Success",
                 data: updateUser
@@ -148,7 +148,7 @@ const deleteUser = (id) => {
         try {
             const checkUser = await User.findOne({ _id: id })
             if (!checkUser) {
-                resolve({
+                return resolve({
                     status: '404',
                     message: 'The email is incorrect'
                 });
@@ -156,7 +156,7 @@ const deleteUser = (id) => {
 
             await User.findByIdAndDelete(id);
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Delete user success',
             })
@@ -167,13 +167,13 @@ const deleteUser = (id) => {
     })
 }
 
-const getAllUser = () => {
+const getAllUsers = () => {
     return new Promise(async (resolve, reject) => {
         try {
             const allUser = await User.find({})
 
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Get all user success',
                 data: allUser
@@ -189,7 +189,7 @@ const getDetailUser = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             const detailUser = await User.findOne({ _id: id })
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Get detail user success',
                 data: detailUser
@@ -205,7 +205,7 @@ const refreshToken = (token) => {
     return new Promise(async (resolve, reject) => {
         jwt.verify(token, process.env.JWT_PASS_REFRESH, async function (err, user) {
             if (err) {
-                reject(err);
+                return reject(err);
             }
 
             let newAccess_Token = "";
@@ -219,7 +219,7 @@ const refreshToken = (token) => {
                 })
             }
 
-            resolve({
+            return resolve({
                 data: {
                     status: "200",
                     message: "success",
@@ -235,7 +235,7 @@ module.exports = {
     loginUser,
     updateUser,
     deleteUser,
-    getAllUser,
+    getAllUsers,
     getDetailUser,
     refreshToken,
 }

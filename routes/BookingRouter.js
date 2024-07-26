@@ -5,5 +5,10 @@ const bookingController = require('../controllers/BookingController');
 const { authUserMiddleware, authAdminMiddleware } = require("../middleware/authMiddeware");
 
 router.post("/create/:id", authUserMiddleware, bookingController.createBooking);
+router.get('/bookings-user/:id', authUserMiddleware, bookingController.getAllBookingsByUserId);
+router.get('/booking-detail/:id', authUserMiddleware, bookingController.getBookingDetail);
+router.get('/bookings-all', authUserMiddleware, bookingController.getAllBookings);
+router.put('/update/:id', authUserMiddleware, bookingController.updateBooking);
+router.delete('/delete/:id', authUserMiddleware, bookingController.deleteBooking);
 
 module.exports = router;

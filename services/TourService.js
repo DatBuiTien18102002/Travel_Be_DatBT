@@ -13,7 +13,7 @@ const createTour = (newTour) => {
             let createTour;
 
             if (checkTour) {
-                resolve({
+                return resolve({
                     status: '400',
                     message: 'The name tour is already exists'
                 });
@@ -24,7 +24,7 @@ const createTour = (newTour) => {
             }
 
             if (createTour) {
-                resolve({
+                return resolve({
                     status: '200',
                     message: 'Create tour success',
                     data: createTour
@@ -41,7 +41,7 @@ const getDetailTour = (id) => {
         try {
             const detailTour = await Tour.findOne({ _id: id })
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Get detail tour success',
                 data: detailTour
@@ -72,7 +72,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
 
             if (!_sort || !_order) {
                 const allTour = await Tour.find(filter).limit(limit).skip(tourSkip);
-                resolve({
+                return resolve({
                     status: "200",
                     message: "Get all tour success",
                     currentPage: +page,
@@ -84,7 +84,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
                 const allTour = await Tour.find(filter).limit(limit).skip(tourSkip).sort({
                     [_sort]: _order
                 }).collation({ locale: 'vi', strength: 2 });
-                resolve({
+                return resolve({
                     status: '200',
                     message: 'Get all tour success',
                     currentPage: +page,
@@ -93,7 +93,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
                     data: allTour
                 })
             } else {
-                reject({
+                return reject({
                     status: '400',
                     message: 'You need to provide both _sort and _order',
                 })
@@ -109,7 +109,7 @@ const updateTour = (id, data) => {
         try {
             const checkTour = await Tour.findOne({ _id: id })
             if (!checkTour) {
-                resolve({
+                return resolve({
                     status: '404',
                     message: 'The tour is not found'
                 });
@@ -117,7 +117,7 @@ const updateTour = (id, data) => {
 
             const updateTour = await Tour.findByIdAndUpdate(id, data, { new: true });
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Success',
                 data: updateTour
@@ -134,7 +134,7 @@ const deleteTour = (id) => {
         try {
             const checkProduct = await Tour.findOne({ _id: id })
             if (!checkProduct) {
-                resolve({
+                return resolve({
                     status: '404',
                     message: "Tour's not founded"
                 });
@@ -142,7 +142,7 @@ const deleteTour = (id) => {
 
             await Tour.findByIdAndDelete(id);
 
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Delete tour success',
             })
@@ -157,7 +157,7 @@ const getUniqueValuesByAttr = (value) => {
     return new Promise(async (resolve, reject) => {
         try {
             const uniqueValue = await Tour.distinct(value);
-            resolve({
+            return resolve({
                 status: '200',
                 message: 'Get value unit success',
                 data: uniqueValue,
