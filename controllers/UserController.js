@@ -78,7 +78,6 @@ const logoutUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        console.log("Update");
         const userId = req.params.id;
         const data = req.body;
         const { newPassword, confirmNewPassword } = data;

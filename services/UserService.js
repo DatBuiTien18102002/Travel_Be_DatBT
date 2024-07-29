@@ -95,7 +95,6 @@ const updateUser = (id, data) => {
     return new Promise(async (resolve, reject) => {
         try {
             const checkedUser = await User.findOne({ _id: id });
-
             if (!checkedUser) {
                 return resolve({
                     status: "404",
@@ -104,8 +103,7 @@ const updateUser = (id, data) => {
             }
 
             const checkEmail = await User.findOne({ email: data?.email })
-
-            if (checkEmail._id.toString() !== id) {
+            if (checkEmail?._id.toString() !== id && data?.email) {
                 return resolve({
                     status: "404",
                     message: "The email is already exist"

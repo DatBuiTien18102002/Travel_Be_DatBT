@@ -6,9 +6,9 @@ const { authUserMiddleware, authAdminMiddleware } = require("../middleware/authM
 
 router.post("/create", authUserMiddleware, bookingController.createBooking);
 router.get('/bookings-user/:id', authUserMiddleware, bookingController.getAllBookingsByUserId);
-router.get('/booking-detail/:id', authUserMiddleware, bookingController.getBookingDetail);
+router.get('/booking-detail/:id', bookingController.getBookingDetail);
 router.get('/bookings-all', authUserMiddleware, bookingController.getAllBookings);
 router.put('/update/:id', authUserMiddleware, bookingController.updateBooking);
-router.delete('/delete/:id', authUserMiddleware, bookingController.deleteBooking);
+router.delete('/delete/:id', bookingController.deleteBooking);
 
 module.exports = router;

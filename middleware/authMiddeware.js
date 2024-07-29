@@ -27,7 +27,7 @@ const authAdminMiddleware = (req, res, next) => {
 const authUserMiddleware = (req, res, next) => {
     const token = req.headers.token.split(' ')[1];
     const userId = req.params.id;
-    const userBodyId = req.body?.userId;
+    const userBodyId = req.body?.userInfo;
 
     jwt.verify(token, process.env.JWT_PASS_ACCESS, function (err, user) {
         if (err) {
@@ -37,6 +37,10 @@ const authUserMiddleware = (req, res, next) => {
             })
         }
         const { payload } = user;
+        console.log(user);
+        console.log("userId", userId);
+        console.log("token", payload?.id);
+        console.log("userBodyId", req.body);
         if (payload?.isAdmin || payload?.id === userId || payload?.id === userBodyId) {
             next()
         } else {
