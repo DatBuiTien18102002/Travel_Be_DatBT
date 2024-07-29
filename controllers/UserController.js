@@ -1,10 +1,7 @@
 const UserService = require('../services/UserService');
-const User = require("../models/UserModel");
-// const { generalAccessToken, generalRefreshToken } = require("../services/jwtService");
 
 const createUser = async (req, res) => {
     try {
-        console.log(req.body);
         const { email, password, confirmPassword } = req.body;
         const reg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
         const isCheckEmail = reg.test(email);
@@ -99,10 +96,10 @@ const updateUser = async (req, res) => {
         const response = await UserService.updateUser(userId, data);
 
         return res.status(200).json(response);
-    } catch (error) {
-        console.log(error.message);
+    } catch (e) {
+        console.log(e.message);
         return res.status(404).json({
-            err: error.message
+            err: e.message
         })
     }
 }

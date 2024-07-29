@@ -42,9 +42,9 @@ const createBooking = (newBooking) => {
                 data: createdBooking
             })
 
-        } catch (error) {
-            console.log("error nẻ", error);
-            reject(error)
+        } catch (e) {
+            console.log("error", e);
+            reject(e)
         }
 
 
@@ -165,8 +165,6 @@ const deleteBooking = (id) => {
                     message: "Booking's not founded"
                 });
             }
-
-            console.log(checkBooking.tourInfo.toString());
 
             const tourData = await Tour.findOneAndUpdate(
                 {

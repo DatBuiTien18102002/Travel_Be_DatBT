@@ -13,7 +13,7 @@ const createUser = (newUser) => {
             const checkUser = await User.findOne({
                 email: email
             })
-            console.log("checkUser", checkUser);
+
             if (checkUser) {
                 return resolve({
                     status: '400',

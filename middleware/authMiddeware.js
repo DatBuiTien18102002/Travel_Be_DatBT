@@ -37,10 +37,7 @@ const authUserMiddleware = (req, res, next) => {
             })
         }
         const { payload } = user;
-        console.log(user);
-        console.log("userId", userId);
-        console.log("token", payload?.id);
-        console.log("userBodyId", req.body);
+
         if (payload?.isAdmin || payload?.id === userId || payload?.id === userBodyId) {
             next()
         } else {
