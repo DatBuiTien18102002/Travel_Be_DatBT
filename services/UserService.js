@@ -17,7 +17,7 @@ const createUser = (newUser) => {
             if (checkUser) {
                 return resolve({
                     status: '400',
-                    message: 'The email is already exists'
+                    message: 'Email đã tồn tại!'
                 });
             }
 
@@ -29,7 +29,7 @@ const createUser = (newUser) => {
             if (createUser) {
                 return resolve({
                     status: '200',
-                    message: 'Create account success',
+                    message: 'Tạo tài khoản thành công!',
                     data: createUser
                 })
             }
@@ -52,7 +52,7 @@ const loginUser = (user) => {
             if (!checkUser) {
                 return resolve({
                     status: '404',
-                    message: "The email is incorrect"
+                    message: "User không tìm thấy!"
                 })
             }
 
@@ -61,7 +61,7 @@ const loginUser = (user) => {
             if (!comparePassword) {
                 return resolve({
                     status: "404",
-                    message: "The password is incorrect"
+                    message: "Mật khẩu không đúng!"
                 })
             }
 
@@ -77,7 +77,7 @@ const loginUser = (user) => {
 
             return resolve({
                 status: '200',
-                message: 'Login Success',
+                message: 'Đăng nhập thành công!',
                 data: {
                     access_token,
                     refresh_token
@@ -98,7 +98,7 @@ const updateUser = (id, data) => {
             if (!checkedUser) {
                 return resolve({
                     status: "404",
-                    message: "The user not found"
+                    message: "User không tìm thấy!"
                 })
             }
 
@@ -106,7 +106,7 @@ const updateUser = (id, data) => {
             if (checkEmail?._id.toString() !== id && data?.email) {
                 return resolve({
                     status: "404",
-                    message: "The email is already exist"
+                    message: "Email đã tồn tại!"
                 })
             }
 
@@ -118,12 +118,12 @@ const updateUser = (id, data) => {
 
                     return resolve({
                         status: "200",
-                        message: "Update password success",
+                        message: "Cập nhật mật khẩu thành công!",
                     })
                 } else {
                     return resolve({
                         status: "404",
-                        message: "The old password is incorrect"
+                        message: "Mật khẩu cũ không đúng!"
                     })
                 }
             }
@@ -132,7 +132,7 @@ const updateUser = (id, data) => {
 
             return resolve({
                 status: "200",
-                message: "Success",
+                message: "Cập nhật user thành công!",
                 data: updateUser
             })
         } catch (error) {
@@ -148,7 +148,7 @@ const deleteUser = (id) => {
             if (!checkUser) {
                 return resolve({
                     status: '404',
-                    message: 'The email is incorrect'
+                    message: 'Email không đúng!'
                 });
             }
 
@@ -156,7 +156,7 @@ const deleteUser = (id) => {
 
             return resolve({
                 status: '200',
-                message: 'Delete user success',
+                message: 'Xóa user thành công!',
             })
 
         } catch (e) {
@@ -173,7 +173,7 @@ const getAllUsers = () => {
 
             return resolve({
                 status: '200',
-                message: 'Get all user success',
+                message: 'Lấy tất cả user thành công!',
                 data: allUser
             })
 
@@ -189,7 +189,7 @@ const getDetailUser = (id) => {
             const detailUser = await User.findOne({ _id: id })
             return resolve({
                 status: '200',
-                message: 'Get detail user success',
+                message: 'Lấy chi tiết user thành công!',
                 data: detailUser
             })
 

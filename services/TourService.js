@@ -15,7 +15,7 @@ const createTour = (newTour) => {
             if (checkTour) {
                 return resolve({
                     status: '400',
-                    message: 'The name tour is already exists'
+                    message: 'Tên tour đã tồn tại!'
                 });
             } else {
                 createTour = await Tour.create({
@@ -26,7 +26,7 @@ const createTour = (newTour) => {
             if (createTour) {
                 return resolve({
                     status: '200',
-                    message: 'Create tour success',
+                    message: 'Tạo tour thành công!',
                     data: createTour
                 })
             }
@@ -43,7 +43,7 @@ const getDetailTour = (id) => {
 
             return resolve({
                 status: '200',
-                message: 'Get detail tour success',
+                message: 'Lấy chi tiết tour thành công!',
                 data: detailTour
             })
 
@@ -74,7 +74,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
                 const allTour = await Tour.find(filter).limit(limit).skip(tourSkip).populate('reviews');
                 return resolve({
                     status: "200",
-                    message: "Get all tour success",
+                    message: "Lấy tất cả tour thành công!",
                     currentPage: +page,
                     totalTour: totalTour,
                     totalPage: totalPage,
@@ -86,7 +86,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
                 }).collation({ locale: 'vi', strength: 2 });
                 return resolve({
                     status: '200',
-                    message: 'Get all tour success',
+                    message: 'Lấy tất cả tour thành công!',
                     currentPage: +page,
                     totalTour: totalTour,
                     totalPage: totalPage,
@@ -95,7 +95,7 @@ const getTours = (limit = 0, page = 1, _sort = "", _order = "", filter = {}) => 
             } else {
                 return reject({
                     status: '400',
-                    message: 'You need to provide both _sort and _order',
+                    message: 'Bạn cần cung cấp _sort và _order!',
                 })
             }
         } catch (error) {
@@ -111,7 +111,7 @@ const updateTour = (id, data) => {
             if (!checkTour) {
                 return resolve({
                     status: '404',
-                    message: 'The tour is not found'
+                    message: 'Tour không tìm thấy!'
                 });
             }
 
@@ -136,7 +136,7 @@ const deleteTour = (id) => {
             if (!checkProduct) {
                 return resolve({
                     status: '404',
-                    message: "Tour's not founded"
+                    message: "Tour không tìm thấy!"
                 });
             }
 
@@ -144,7 +144,7 @@ const deleteTour = (id) => {
 
             return resolve({
                 status: '200',
-                message: 'Delete tour success',
+                message: 'Xóa tour thành công!',
             })
 
         } catch (e) {

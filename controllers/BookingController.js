@@ -9,7 +9,7 @@ const createBooking = async (req, res) => {
         if (!userInfo || !tourInfo || !seat || !price || !dateStart) {
             return res.status(400).json({
                 status: "ERR",
-                message: "The information provided is not enough"
+                message: "Thông tin cung cấp không đủ!"
             })
         }
 
@@ -30,7 +30,7 @@ const getAllBookingsByUserId = async (req, res) => {
         if (!userId) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The userId is required'
+                message: 'Cần cung cấp UserId!'
             })
         }
         const response = await BookingService.getAllBookingsByUserId(userId);
@@ -63,7 +63,7 @@ const getBookingDetail = async (req, res) => {
         if (!bookingId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The Id Booking is required'
+                message: 'Cần cung cấp Id Booking!'
             })
         }
         const response = await BookingService.getBookingDetail(bookingId);
@@ -84,7 +84,7 @@ const updateBooking = async (req, res) => {
         if (!bookingId) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The bookingId is required'
+                message: 'Cần cung cấp Id Booking!'
             })
         }
 
@@ -105,7 +105,7 @@ const deleteBooking = async (req, res) => {
         if (!bookingId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The bookingId is required'
+                message: 'Cần cung cấp Id Booking!'
             })
         }
 

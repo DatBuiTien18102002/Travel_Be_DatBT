@@ -9,17 +9,17 @@ const createUser = async (req, res) => {
         if (!email || !password || !confirmPassword) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The input is required'
+                message: 'Cần cung cấp đầy đủ thông tin!'
             })
         } else if (!isCheckEmail) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The email is invalid'
+                message: 'Email không đúng cấu trúc!'
             })
         } else if (password !== confirmPassword) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The password must equal confirm password'
+                message: 'Mật khẩu và xác nhận mật khẩu không trùng nhau!'
             })
         }
 
@@ -42,12 +42,12 @@ const loginUser = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({
                 status: "ERR",
-                message: "The input isRequired"
+                message: "Cần cung cấp đầy đủ thông tin!"
             })
         } else if (!isCheckEmail) {
             return res.status(400).json({
                 status: "ERR",
-                message: "The email is invalid"
+                message: "Email cung cấp không khả dụng!"
             })
         }
 
@@ -64,7 +64,7 @@ const logoutUser = async (req, res) => {
         res.clearCookie("refresh_token");
         return res.status(200).json({
             status: "200",
-            message: "Logout successfully"
+            message: "Đăng xuất thành công!"
         })
     } catch (e) {
         return res.status(404).json({
@@ -82,14 +82,14 @@ const updateUser = async (req, res) => {
         if (!userId) {
             return res.status(200).json({
                 status: "ERR",
-                message: "The userId is required"
+                message: "Cần cung cấp UserId!"
             })
         }
 
         if (newPassword && newPassword !== confirmNewPassword) {
             return res.status(200).json({
                 status: "ERR",
-                message: "The new password must equal confirm new password"
+                message: "Mật khẩu và xác nhận mật khẩu không trùng nhau!"
             })
         }
 
@@ -110,7 +110,7 @@ const deleteUser = async (req, res) => {
         if (!userId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The userId is required'
+                message: 'Cần cung cấp UserId!'
             })
         }
 
@@ -143,7 +143,7 @@ const getDetailUser = async (req, res) => {
         if (!userId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The userId is required'
+                message: 'Cần cung cấp UserId!'
             })
         }
         const response = await UserService.getDetailUser(userId);
@@ -163,7 +163,7 @@ const refreshToken = async (req, res) => {
         if (!token) {
             return res.status(400).json({
                 status: "ERR",
-                message: "The refresh token is required"
+                message: "Cần cung cấp Refresh token!"
             })
         }
 

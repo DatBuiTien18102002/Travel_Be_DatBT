@@ -14,13 +14,13 @@ const createReview = (newReview) => {
             if (review) {
                 return resolve({
                     status: '200',
-                    message: 'Create review success',
+                    message: 'Tạo đánh giấ thành công!',
                     data: review
                 })
             } else {
                 return resolve({
                     status: '400',
-                    message: 'Create review failed',
+                    message: 'Tạo đánh giá thất bại!',
                 })
             }
         } catch (e) {

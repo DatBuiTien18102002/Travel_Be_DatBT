@@ -25,20 +25,20 @@ const createBooking = (newBooking) => {
             if (!tourData) {
                 return resolve({
                     status: 'ERR',
-                    message: `Tour khong du cho`
+                    message: `Tour không đủ chỗ!`
                 })
             }
             const createdBooking = await Booking.create({ ...newBooking });
             if (!createdBooking) {
                 return resolve({
                     status: '400',
-                    message: 'Create Booking failed',
+                    message: 'Tạo Booking thất bại!',
                 })
             }
 
             resolve({
                 status: '200',
-                message: 'Create Booking success',
+                message: 'Tạo Booking thành công!',
                 data: createdBooking
             })
 
@@ -62,7 +62,7 @@ const getAllBookingsByUserId = (id) => {
             if (bookings === null) {
                 return resolve({
                     status: 'Err',
-                    message: 'Can not find the booking in db',
+                    message: 'Không thể tìm thấy đơn đặt trước trong db!',
                 })
             }
 
@@ -92,7 +92,7 @@ const getAllBookings = () => {
             if (bookings === null) {
                 return resolve({
                     status: 'Err',
-                    message: 'Can not find the booking in db',
+                    message: 'Không thể tìm thấy đơn đặt trước trong db!',
                 })
             }
 
@@ -114,7 +114,7 @@ const getBookingDetail = (id) => {
             if (booking === null) {
                 resolve({
                     status: 'Err',
-                    message: 'Can not find the booking in db',
+                    message: 'Không thể tìm thấy đơn đặt trước trong db!'
                 })
             }
 
@@ -137,7 +137,7 @@ const updateBooking = (id, data) => {
             if (!checkBooking) {
                 return resolve({
                     status: '404',
-                    message: 'The booking is not found'
+                    message: 'Không thể tìm thấy đơn đặt trước trong db!'
                 });
             }
 
@@ -145,7 +145,7 @@ const updateBooking = (id, data) => {
 
             return resolve({
                 status: '200',
-                message: 'Success',
+                message: 'Cập nhật thành công!',
                 data: updateBooking
             })
 
@@ -162,7 +162,7 @@ const deleteBooking = (id) => {
             if (!checkBooking) {
                 return resolve({
                     status: '404',
-                    message: "Booking's not founded"
+                    message: "Không thể tìm thấy đơn đặt trước trong db!"
                 });
             }
 
@@ -183,7 +183,7 @@ const deleteBooking = (id) => {
             if (!tourData) {
                 return resolve({
                     status: 'ERR',
-                    message: 'Can not cancel booking tour'
+                    message: 'Không thể xóa tour đã đặt!'
                 })
             }
 
@@ -192,13 +192,13 @@ const deleteBooking = (id) => {
             if (bookingDelete === null) {
                 return resolve({
                     status: 'ERR',
-                    message: 'Can not find and cancel booking tour'
+                    message: 'Không thể tìm thấy và xóa đơn đặt trước trong db!'
                 })
             }
 
             return resolve({
                 status: '200',
-                message: 'Cancel booking tour success',
+                message: 'Xóa đơn đặt trước thành công!',
             })
 
         } catch (e) {

@@ -7,7 +7,7 @@ const createTour = async (req, res) => {
         if (!name || !price || !maxSeat || !dateStart || !depart || !destination || !timeTravel) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The input is required'
+                message: 'Cần cung cấp đầy đủ thông tin!'
             })
         }
 
@@ -28,7 +28,7 @@ const getDetailTour = async (req, res) => {
         if (!tourId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The tourId is required'
+                message: 'Cần cung cấp tour id!'
             })
         }
         const response = await TourService.getDetailTour(tourId);
@@ -62,7 +62,7 @@ const updateTour = async (req, res) => {
         if (!tourId) {
             return res.status(400).json({
                 status: 'ERR',
-                message: 'The tourId is required'
+                message: 'Cần cung cấp tour id!'
             })
         }
 
@@ -82,7 +82,7 @@ const deleteTour = async (req, res) => {
         if (!tourId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The tourId is required'
+                message: 'Cần cung cấp tour id!'
             })
         }
 
