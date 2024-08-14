@@ -73,6 +73,42 @@ const logoutUser = async (req, res) => {
     }
 }
 
+const loginGGUser = async (req, res) => {
+    try {
+        if (!req.user) {
+            res.status(200).json({
+                status: "401",
+                message: "Tài khoản không được xác thực!"
+            })
+        }
+        const response = await UserService.authWithGG(req.user);
+        return res.status(200).json(response);
+    } catch (e) {
+        console.log("UserController", e);
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+
+}
+const loginFBUser = async (req, res) => {
+    try {
+        if (!req.user) {
+            res.status(200).json({
+                status: "401",
+                message: "Tài khoản không được xác thực!"
+            })
+        }
+        const response = await UserService.authWithFB(req.user);
+        return res.status(200).json(response);
+    } catch (e) {
+        console.log("UserController", e);
+        return res.status(404).json({
+            err: e.message
+        })
+    }
+}
+
 const updateUser = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -180,6 +216,8 @@ const refreshToken = async (req, res) => {
 module.exports = {
     createUser,
     loginUser,
+    loginGGUser,
+    loginFBUser,
     logoutUser,
     updateUser,
     deleteUser,

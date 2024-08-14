@@ -228,6 +228,146 @@ const refreshToken = (token) => {
     })
 }
 
+const authWithGG = (user) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { uid, email, name, picture } = user;
+            const userRes = await User.findOne({
+                email: email
+            });
+
+            if (!userRes) {
+                const newUser = await User.create({
+                    email,
+                    name,
+                    avatar: picture,
+                    ggId: uid,
+                })
+
+                if (newUser) {
+                    const access_token = await generalAccessToken({
+                        id: newUser.id,
+                        isAdmin: newUser.isAdmin
+                    });
+
+                    const refresh_token = await generalRefreshToken({
+                        id: newUser.id,
+                        isAdmin: newUser.isAdmin
+                    });
+
+                    return resolve({
+                        status: '200',
+                        message: 'Tạo tài khoản thành công!',
+                        data: {
+                            access_token,
+                            refresh_token
+                        }
+                    })
+                }
+            }
+
+            if (userRes && uid === (userRes?.ggId || "")) {
+                const access_token = await generalAccessToken({
+                    id: userRes.id,
+                    isAdmin: userRes.isAdmin
+                });
+
+                const refresh_token = await generalRefreshToken({
+                    id: userRes.id,
+                    isAdmin: userRes.isAdmin
+                });
+
+                return resolve({
+                    status: '200',
+                    message: 'Đăng nhập thành công!',
+                    data: {
+                        access_token,
+                        refresh_token
+                    }
+                })
+            }
+
+            return resolve({
+                status: '401',
+                message: 'Tài khoản với email này đã được tạo, vui lòng chọn email khác!',
+            })
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const authWithFB = (user) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { uid, email, name, picture } = user;
+            const userRes = await User.findOne({
+                email: email
+            });
+
+            if (!userRes) {
+                const newUser = await User.create({
+                    email,
+                    name,
+                    avatar: picture,
+                    fbId: uid,
+                })
+
+                if (newUser) {
+                    const access_token = await generalAccessToken({
+                        id: newUser.id,
+                        isAdmin: newUser.isAdmin
+                    });
+
+                    const refresh_token = await generalRefreshToken({
+                        id: newUser.id,
+                        isAdmin: newUser.isAdmin
+                    });
+
+                    return resolve({
+                        status: '200',
+                        message: 'Tạo tài khoản thành công!',
+                        data: {
+                            access_token,
+                            refresh_token
+                        }
+                    })
+                }
+            }
+
+            if (userRes && uid === (userRes?.fbId || "")) {
+                const access_token = await generalAccessToken({
+                    id: userRes.id,
+                    isAdmin: userRes.isAdmin
+                });
+
+                const refresh_token = await generalRefreshToken({
+                    id: userRes.id,
+                    isAdmin: userRes.isAdmin
+                });
+
+                return resolve({
+                    status: '200',
+                    message: 'Đăng nhập thành công!',
+                    data: {
+                        access_token,
+                        refresh_token
+                    }
+                })
+            }
+
+            return resolve({
+                status: '401',
+                message: 'Tài khoản với email này đã được tạo, vui lòng chọn email khác!',
+            })
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     createUser,
     loginUser,
@@ -236,4 +376,6 @@ module.exports = {
     getAllUsers,
     getDetailUser,
     refreshToken,
+    authWithGG,
+    authWithFB,
 }

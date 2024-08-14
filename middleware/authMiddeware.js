@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const admin = require("../firebase");
 
 dotenv.config();
 
@@ -49,7 +50,26 @@ const authUserMiddleware = (req, res, next) => {
     });
 }
 
+const authFirebaseMiddleware = async (req, res, next) => {
+    const idToken = req.headers.token.split(' ')[1];
+
+    if (!idToken) {
+        return res.status(401).send("Unauthorized");
+    }
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        req.user = decodedToken;
+        next();
+    } catch (error) {
+
+        console.log("error", error.message);
+        return res.status(401).send("Unauthorized");
+    }
+}
+
 module.exports = {
     authAdminMiddleware,
-    authUserMiddleware
+    authUserMiddleware,
+    authFirebaseMiddleware,
 }
