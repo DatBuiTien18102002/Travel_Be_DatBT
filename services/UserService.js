@@ -56,6 +56,13 @@ const loginUser = (user) => {
                 })
             }
 
+            if (checkUser?.ggId || checkUser?.fbId) {
+                return resolve({
+                    status: "404",
+                    message: "Email phải đăng nhập bằng Google hoặc Facebook!"
+                })
+            }
+
             const comparePassword = bcrypt.compareSync(password, checkUser.password);
 
             if (!comparePassword) {
